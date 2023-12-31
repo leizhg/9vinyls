@@ -1,0 +1,147 @@
+    @media screen and (max-width: 600px) {
+        .modal-content {
+            width: 90%; /* Take more width on smaller screens */
+        }
+    }
+
+    .grid-container {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: repeat(3, 120px);
+        grid-auto-rows: 120px; /* Row size */
+        gap: 10px;
+        width: 90vw; /* 90% of the viewport width */
+        height: auto; /* 90vh 90% of the viewport height */
+        max-width: 90vh; /* Limiting width to maintain aspect ratio */
+        margin: auto; /* Center the grid */
+        margin-bottom: 20px; /* Reduce bottom margin */
+        margin-top: 70px;
+    }
+
+    .grid-item {
+        width: 120px;
+        height: 120px;
+        padding: 10px; /* Adjust padding as needed */
+        border: 1px solid #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        aspect-ratio: 1 / 1; /* Maintain square aspect ratio */
+        position: relative; 
+        margin-bottom: 10px; /* Reduce bottom margin */
+    }
+
+    .explanation-tooltip {
+        display: none;
+        position: absolute;
+        bottom: 100%; /* Position above the item */
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.75);
+        color: white;
+        width: 250px; /* Fixed width larger than the grid item */
+        margin-left: -70px; /* Half of the extra width to extend equally on both sides */
+        border-radius: 5px;
+        z-index: 2;
+        text-align: left;
+        font-size: 0.8em;
+        line-height: 1.4;
+        box-sizing: border-box;
+    }
+
+
+    .grid-item:hover .explanation-tooltip {
+        display: block; /* Show the tooltip on hover */
+    }
+
+    .overlay-container {
+        position: relative; /* Container for the image and the overlay "+" sign */
+    }
+
+    .overlay-container img {
+        width: 100%; /* Adjust as needed */
+        height: auto; /* Adjust as needed */
+    }
+
+    .plus-sign {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1; /* Ensures the "+" sign is above the image */
+        color: rgb(153, 255, 0); /* Change the color to yellow */
+        font-size: 30px; /* Make the sign bigger */
+    }
+
+    .grid-item:first-child {
+        cursor: pointer;
+    }
+
+    .modal {
+        display: none; /* Hidden by default */
+        position: absolute; /* Stay in place */
+        z-index: 10; /* Sit on top */
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%); /* Adjust position to truly center it */
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        padding-top: 60px; /* Location of the box */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        padding: 20px;
+        border: 1px solid #888;
+        width: auto; /* Adjust width to content */
+        max-width: 600px; /* Maximum width */
+        margin: auto; /* Auto margins for horizontal centering */
+        position: absolute; /* Absolute position */
+        top: 50%; /* Centering vertically */
+        left: 50%; /* Centering horizontally */
+        transform: translate(-50%, -50%); /* Adjust for centering */
+    }
+    .loading-indicator {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 11; /* Above the modal */
+    }
+
+    .spinner {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .curation-selector {
+        display: flex;
+        justify-content: center; /* Centers the content horizontally */
+        align-items: center; /* Centers the content vertically */
+        margin-top: 60px; /* Adjust this value to reduce the gap */
+        margin-bottom: 20px; /* Adjust as needed */
+    }
+    .content-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center children horizontally */
+        justify-content: center; /* Center children vertically */
+        margin: auto; /* Center the container itself */
+    }
+    #promptModalTextArea {
+        width: 100%; /* Adjust this to fit the modal width or as per your layout requirements */
+        max-width: 600px; /* You can set a max-width to ensure it doesn't get too wide */
+        /* Other styles... */
+    }

@@ -1,0 +1,202 @@
+<div class="content-container">
+
+    <div class="grid-container">
+        <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+            <div class="spinner"></div>
+        </div>
+
+        <% for(let i = 0; i < 9; i++) { %>
+
+            <% if (i === 0) { %>
+                <div class="grid-item" onclick="openModal()">
+                    <span class="plus-sign">+</span> <!-- The first item with a + sign -->              
+            </div>
+            <% } else { %>
+                <div class="grid-item">
+
+                </div>
+            <% } %>
+        <% } %>
+    </div>
+
+    <!-- Dropdown menu for selecting the curation method -->
+    <div class="curation-selector">
+        <label for="curator">9vinyls curated by: </label>
+        <select id="curator">
+            <option value="google">Google Gemini Pro</option>
+            <option value="openai">OpenAI GPT3.5 Turbo</option>
+        </select>
+    </div>
+
+    <!-- Curation Instruction Link -->
+    <div class="curation-instruction-link">
+        <a href="#" id="curationInstructionLink">view/change curation prompt</a>
+    </div>
+
+</div>
+
+
+
+<!-- Prompt Modal Structure -->
+<div id="curationInstructionModal" class="modal">
+    <div class="modal-content">
+        <textarea id="promptModalTextArea" rows="10"><%- curationPrompt %></textarea>
+        <button id="changePrompt">Change</button>
+        <button id="cancelPromptChange">Cancel</button>
+        <button id="resetPrompt">Reset</button>
+    </div>
+</div>
+
+
+
+<!-- Add this modal structure -->
+<div id="vinylModal" style="display:none;" class="modal">
+    <div class="modal-content">
+
+        <form id="vinylSubmitForm">
+            <label for="title">Your vinyl: </label>
+            <input type="text" id="title" name="title" required placeholder="e.g. Thriller">
+
+            <button type="submit">Submit</button>
+            <button type="button" onclick="closeModal()">Cancel</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    function openModal() {
+        document.getElementById('vinylModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('vinylModal').style.display = 'none';
+    }
+
+    //handles submitting user entered record
+    document.getElementById('vinylSubmitForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        // Show loading indicator
+        document.getElementById('loadingIndicator').style.display = 'block';
+
+        // Hide the modal window
+        closeModal();
+
+        const formData = {
+            title: document.getElementById('title').value,
+            curator: document.getElementById('curator').value, // Get the selected curator value
+            prompt: document.getElementById('promptModalTextArea').value // Get user updated propmt
+        };
+
+        //alert(formData);
+
+        fetch('/vinyls', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+        .then(response => response.json() /*response=>console.log(response)*/ )
+        .then(data => {
+            console.log('Success:', data);
+            updateGrid(data);
+            //closeModal(); // Close the modal
+            // Hide loading indicator
+            if(document.getElementById('loadingIndicator'))
+                document.getElementById('loadingIndicator').style.display = 'none';
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert("Curation error, please try again. Maybe change curator if the error persists.")
+            refreshGrid();
+        });
+    });
+
+    document.getElementById('curationInstructionLink').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('curationInstructionModal').style.display = 'block';
+    });
+
+    document.getElementById('cancelPromptChange').addEventListener('click', function() {
+        document.getElementById('curationInstructionModal').style.display = 'none';
+    });
+
+    document.getElementById('changePrompt').addEventListener('click', function() {
+        // Logic to change the prompt
+        const newPrompt = document.getElementById('promptModalTextArea').value;
+        // Update the prompt variable or state here
+        document.getElementById('curationInstructionModal').style.display = 'none';
+    });
+
+    document.getElementById('resetPrompt').addEventListener('click', function() {
+        // Logic to reset the prompt to its original value
+        document.getElementById('promptModalTextArea').value = `<%- curationPrompt %>`;
+    });
+
+
+    function refreshGrid(){
+        const gridContainer = document.querySelector('.grid-container');
+        gridContainer.innerHTML = ''; // Clear existing content
+        gridContainer.innerHTML +=`
+        <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+            <div class="spinner"></div>
+        </div>
+        `;
+        for(let i = 0; i < 9; i++){
+            if(i==0){
+                // Add the first grid item for adding new records
+                gridContainer.innerHTML += `
+                    <div class="grid-item" onclick="openModal()">
+                        <div class="overlay-container">
+                            <span class="plus-sign">+</span>
+                        </div>
+                    </div>
+                `;
+            }else{
+                gridContainer.innerHTML += `
+                    <div class="grid-item">
+                    </div>
+                `;
+            }
+        }
+    }
+
+    function updateGrid(vinyls) {
+        const gridContainer = document.querySelector('.grid-container');
+        gridContainer.innerHTML = ''; // Clear existing content
+        gridContainer.innerHTML +=`
+        <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+            <div class="spinner"></div>
+        </div>
+        `;
+        // Add new grid items based on the response data
+        for(let i = 0; i < 9; i++){
+            if(i==0){
+                // Add the first grid item for adding new records
+                gridContainer.innerHTML += `
+                    <div class="grid-item" onclick="openModal()">
+                        <div class="overlay-container">
+                            <span class="plus-sign">+</span>
+                            <img src="${vinyls[i].coverImage}" alt="${vinyls[i].title}" style="max-width: 100%; max-height: 100%;">
+                            <div class="explanation-tooltip">${vinyls[i].title + " - " + vinyls[i].recommendationReason}</div>
+                        </div>
+                    </div>
+                `;
+
+            }else{
+                gridContainer.innerHTML += `
+                    <div class="grid-item">
+                        <a target="_blank" href="https://www.amazon.com/gp/search?tag=carrotlab08-20&keywords=Vinyl+record+${vinyls[i].title+' '+vinyls[i].artist}">
+                            <img src="${vinyls[i].coverImage}" alt="${vinyls[i].title}" style="max-width: 100%; max-height: 100%;">
+                        </a>
+                        <div class="explanation-tooltip">${vinyls[i].title +" by "+vinyls[i].artist+" - "+ vinyls[i].recommendationReason}</div>
+                    </div>
+                `;
+            }
+        }
+    }
+
+</script>
+
+
