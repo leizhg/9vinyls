@@ -111,7 +111,7 @@
     }
     .loading-indicator {
         position: absolute;
-        top: 45%;
+        top: 42%;
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 11; /* Above the modal */
