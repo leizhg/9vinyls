@@ -9,8 +9,8 @@
         display: grid;
         justify-content: center;
         grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        width: 100%; /* 90% of the viewport width */
+        gap: 15px;
+        width: 90%; /* 90% of the viewport width */
         height: auto; /* 90vh 90% of the viewport height */
         max-width: 600px; /* Limiting width to maintain aspect ratio */
         margin: auto; /* Center the grid */
