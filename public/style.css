@@ -2,20 +2,20 @@
         .modal-content {
             width: 90%; /* Take more width on smaller screens */
         }
+
     }
 
     .grid-container {
         display: grid;
         justify-content: center;
-        grid-template-columns: repeat(3, 120px);
-        grid-auto-rows: 120px; /* Row size */
+        grid-template-columns: repeat(3, 1fr);
         gap: 10px;
-        width: 90vw; /* 90% of the viewport width */
+        width: 100%; /* 90% of the viewport width */
         height: auto; /* 90vh 90% of the viewport height */
-        max-width: 90vh; /* Limiting width to maintain aspect ratio */
+        max-width: 600px; /* Limiting width to maintain aspect ratio */
         margin: auto; /* Center the grid */
         margin-bottom: 20px; /* Reduce bottom margin */
-        margin-top: 70px;
+        margin-top: 90px;
     }
 
     .grid-item {
