@@ -179,19 +179,31 @@
                         <div class="overlay-container">
                             <span class="plus-sign">+</span>
                             <img src="${vinyls[i].coverImage}" alt="${vinyls[i].title}" style="max-width: 100%; max-height: 100%;">
-                            <div class="explanation-tooltip">${vinyls[i].title + " - " + vinyls[i].recommendationReason}</div>
+                            <div class="left-column">
+                                <div class="explanation-tooltip">${vinyls[i].title + " - " + vinyls[i].recommendationReason}</div>
+                            </div>
                         </div>
                     </div>
                 `;
 
             }else{
+                let leftColDev, leftColEndDev;
+                if (i==3||i==6){
+                    leftColDev = `<div class="left-column">`;
+                    leftColEndDev = `</div>`;
+                }else{
+                    leftColDev = ``;
+                    leftColEndDev = ``;
+                }
+
                 gridContainer.innerHTML += `
                     <div class="grid-item">
                         <a target="_blank" href="https://www.amazon.com/gp/search?tag=carrotlab08-20&keywords=Vinyl+record+${vinyls[i].title+' '+vinyls[i].artist}">
                             <img src="${vinyls[i].coverImage}" alt="${vinyls[i].title}" style="max-width: 100%; max-height: 100%;">
-                        </a>
-                        <div class="explanation-tooltip">${vinyls[i].title +" by "+vinyls[i].artist+" - "+ vinyls[i].recommendationReason}</div>
-                    </div>
+                        </a>`+leftColDev+
+                        `<div class="explanation-tooltip">${vinyls[i].title +" by "+vinyls[i].artist+" - "+ vinyls[i].recommendationReason}</div>`+
+                        leftColEndDev+
+                    `</div>
                 `;
             }
         }

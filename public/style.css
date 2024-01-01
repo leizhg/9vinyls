@@ -36,7 +36,7 @@
         position: absolute;
         bottom: 100%; /* Position above the item */
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(-45%);
         background-color: rgba(0, 0, 0, 0.75);
         color: white;
         width: 250px; /* Fixed width larger than the grid item */
@@ -49,7 +49,11 @@
         box-sizing: border-box;
     }
 
-
+    .left-column .explanation-tooltip {
+        left: 100%; /* Align with the right edge of the grid item */
+        transform: translateX(5px); /* Adjust to align with the grid container */
+    }
+    
     .grid-item:hover .explanation-tooltip {
         display: block; /* Show the tooltip on hover */
     }
@@ -106,7 +110,7 @@
     }
     .loading-indicator {
         position: absolute;
-        top: 40%;
+        top: 45%;
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 11; /* Above the modal */
