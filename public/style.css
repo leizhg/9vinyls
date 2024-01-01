@@ -100,7 +100,7 @@
         background-color: #fefefe;
         padding: 20px;
         border: 1px solid #888;
-        width: auto; /* Adjust width to content */
+        width: 80%; /* Adjust width to content */
         max-width: 600px; /* Maximum width */
         margin: auto; /* Auto margins for horizontal centering */
         position: absolute; /* Absolute position */
