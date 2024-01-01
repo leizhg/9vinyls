@@ -18,6 +18,10 @@ app.use(express.static('public'))
 //app.use(express.static(__dirname + '/public'));
 
 const mongoose = require('mongoose')
+
+console.log('Starting server.js')
+console.log('DATABASE_URL :'+process.env.DATABASE_URL)
+
 mongoose.connect(process.env.DATABASE_URL)
 
 const db=mongoose.connection
