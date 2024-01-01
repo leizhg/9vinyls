@@ -86,7 +86,7 @@
         position: absolute; /* Stay in place */
         z-index: 10; /* Sit on top */
         left: 50%;
-        top: 50%;
+        top: 40%;
         transform: translate(-50%, -50%); /* Adjust position to truly center it */
         width: 100%; /* Full width */
         height: 100%; /* Full height */
