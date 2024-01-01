@@ -135,7 +135,7 @@
         display: flex;
         justify-content: center; /* Centers the content horizontally */
         align-items: center; /* Centers the content vertically */
-        margin-top: 20px; /* Adjust this value to reduce the gap */
+        margin-top: 10px; /* Adjust this value to reduce the gap */
         margin-bottom: 20px; /* Adjust as needed */
     }
     .content-container {
@@ -152,5 +152,14 @@
     }
     .instruction-sentence {
         text-align: center;
-        margin-top: 20px;
+        margin-top: 10px;
     }
+    .curation-instruction-link {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    #modalTitle {
+        width: 80%; /* Adjust as needed */
+        /* Other styles... */
+    }
+    

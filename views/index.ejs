@@ -32,13 +32,13 @@
 
     <!-- Curation Instruction Link -->
     <div class="curation-instruction-link">
-        <a href="#" id="curationInstructionLink">view curation prompt </a> |
-        <a href="/whats-this"> what's this </a> |
+        <a href="#" id="curationInstructionLink">view/change curation prompt </a>
+    </div>
+    <div class="curation-instruction-link">
+        <a href="/whats-this"> about </a> |
         <a href="/discuss"> discuss</a>
     </div>
-
 </div>
-
 
 
 <!-- Prompt Modal Structure -->
@@ -58,8 +58,8 @@
     <div class="modal-content">
 
         <form id="vinylSubmitForm">
-            <label for="title">Your vinyl: </label><br>
-            <input type="text" id="title" name="title" required placeholder="e.g. Thriller"><br>
+            <label for="title">Your vinyl: </label>
+            <input type="text" id="modalTitle" name="title" required placeholder="e.g. Thriller">
 
             <button type="submit">Submit</button>
             <button type="button" onclick="closeModal()">Cancel</button>
