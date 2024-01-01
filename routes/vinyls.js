@@ -202,11 +202,13 @@ async function getCoverImageFromiTunes(albumTitle) {
             } else {
                 retry_count++;
                 if (retry_count>2)
-                    return 'default-cover.png'; // Fallback image URL
+                    return 'img/default-cover.png'; // Fallback image URL
             }
         } catch (error) {
             console.error('Error fetching cover image from iTunes:', error);
-            return 'default-cover.jpg'; // Fallback image URL in case of error
+            retry_count++;
+            if (retry_count>2)
+                return 'img/default-cover.png'; // Fallback image URL in case of error
         }
     }
 }
