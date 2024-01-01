@@ -21,7 +21,7 @@
     .grid-item {
         width: calc(33.33%); /* Adjust width to 1/3 of the container width minus gaps */
         aspect-ratio: 1 / 1; /* Maintain a 1:1 aspect ratio */
-        padding: 20px; /* Adjust padding as needed */
+        padding: 30px; /* Adjust padding as needed */
         border: 1px solid #ccc;
         display: flex;
         justify-content: center;
