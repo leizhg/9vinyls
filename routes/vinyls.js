@@ -185,22 +185,29 @@ async function getCoverImageFromiTunes(albumTitle) {
     const searchQuery = `${albumTitle}`;
     const url = `https://itunes.apple.com/search?term=${encodeURIComponent(searchQuery)}&entity=album&limit=1`;
     console.log(url);
+    
+    let retry_count=0;
 
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
+    while(true){
 
-        // Filter out non-album results and find the first album result
-        const albumResult = data.results.find(result => result.wrapperType === 'collection');
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
 
-        if (albumResult) {
-            return albumResult.artworkUrl100; // URL of the album cover
-        } else {
-            return 'default-cover.jpg'; // Fallback image URL
+            // Filter out non-album results and find the first album result
+            const albumResult = data.results.find(result => result.wrapperType === 'collection');
+
+            if (albumResult) {
+                return albumResult.artworkUrl100; // URL of the album cover
+            } else {
+                retry_count++;
+                if (retry_count>2)
+                    return 'default-cover.png'; // Fallback image URL
+            }
+        } catch (error) {
+            console.error('Error fetching cover image from iTunes:', error);
+            return 'default-cover.jpg'; // Fallback image URL in case of error
         }
-    } catch (error) {
-        console.error('Error fetching cover image from iTunes:', error);
-        return 'default-cover.jpg'; // Fallback image URL in case of error
     }
 }
 
