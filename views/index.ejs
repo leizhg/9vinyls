@@ -19,9 +19,11 @@
         <% } %>
     </div>
 
+    <p class="instruction-sentence">click + to enter a vinyl, you'll get 8 matching ones to decorate your wall.</p>
+
     <!-- Dropdown menu for selecting the curation method -->
     <div class="curation-selector">
-        <label for="curator">9vinyls curated by: </label>
+        <label for="curator">curated by: </label>
         <select id="curator">
             <option value="google">Google Gemini Pro</option>
             <option value="openai">OpenAI GPT3.5 Turbo</option>
@@ -30,7 +32,9 @@
 
     <!-- Curation Instruction Link -->
     <div class="curation-instruction-link">
-        <a href="#" id="curationInstructionLink">view/change curation prompt</a>
+        <a href="#" id="curationInstructionLink">view curation prompt </a> |
+        <a href="/whats-this"> what's this </a> |
+        <a href="/discuss"> discuss</a>
     </div>
 
 </div>
@@ -40,7 +44,7 @@
 <!-- Prompt Modal Structure -->
 <div id="curationInstructionModal" class="modal">
     <div class="modal-content">
-        <textarea id="promptModalTextArea" rows="10"><%- curationPrompt %></textarea>
+        <textarea id="promptModalTextArea" rows="10"><%- curationPrompt %></textarea><br>
         <button id="changePrompt">Change</button>
         <button id="cancelPromptChange">Cancel</button>
         <button id="resetPrompt">Reset</button>
@@ -54,8 +58,8 @@
     <div class="modal-content">
 
         <form id="vinylSubmitForm">
-            <label for="title">Your vinyl: </label>
-            <input type="text" id="title" name="title" required placeholder="e.g. Thriller">
+            <label for="title">Your vinyl: </label><br>
+            <input type="text" id="title" name="title" required placeholder="e.g. Thriller"><br>
 
             <button type="submit">Submit</button>
             <button type="button" onclick="closeModal()">Cancel</button>

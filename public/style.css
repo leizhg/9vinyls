@@ -74,7 +74,8 @@
         transform: translate(-50%, -50%);
         z-index: 1; /* Ensures the "+" sign is above the image */
         color: rgb(153, 255, 0); /* Change the color to yellow */
-        font-size: 30px; /* Make the sign bigger */
+        font-size: 40px; /* Make the sign bigger */
+        font-weight: bold;
     }
 
     .grid-item:first-child {
@@ -134,7 +135,7 @@
         display: flex;
         justify-content: center; /* Centers the content horizontally */
         align-items: center; /* Centers the content vertically */
-        margin-top: 60px; /* Adjust this value to reduce the gap */
+        margin-top: 20px; /* Adjust this value to reduce the gap */
         margin-bottom: 20px; /* Adjust as needed */
     }
     .content-container {
@@ -148,4 +149,8 @@
         width: 100%; /* Adjust this to fit the modal width or as per your layout requirements */
         max-width: 600px; /* You can set a max-width to ensure it doesn't get too wide */
         /* Other styles... */
+    }
+    .instruction-sentence {
+        text-align: center;
+        margin-top: 20px;
     }
