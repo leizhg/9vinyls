@@ -5,6 +5,18 @@
 
     }
 
+    body {
+        background-color: #121212; /* Dark background */
+        color: white;             /* Light text */
+    }
+    
+    /* Style other elements accordingly */
+    a, p, h1, h2, h3, h4, h5, h6 {
+        color: white; /* Ensure text is readable on dark background */
+    }
+    
+    /* You can add more styles for other elements as needed */
+    
     .grid-container {
         display: grid;
         justify-content: center;
@@ -98,7 +110,7 @@
 
     /* Modal Content */
     .modal-content {
-        background-color: #fefefe;
+        background-color: #221212;
         padding: 20px;
         border: 1px solid #888;
         width: 80%; /* Adjust width to content */
