@@ -51,7 +51,9 @@ async function getSimilarVinyls(title, curator, prompt) {
 
     // Step 2: For each recommended title, fetch the cover image using iTunes Search API
     const vinylsWithCovers = await Promise.all(recommendedTitles.Records.map(async (record) => {
-        const coverImage = await getCoverImageFromiTunes(record.Title+' by '+record.Artist);
+    const coverImage = await getCoverImageFromiTunes(record.Title+' by '+record.Artist);
+    //coverImage = getCoverImageFromMusicBrainz(record.Title, record.Artist);
+
         console.log(coverImage);
         return new Vinyl({
             title: record.Title,
@@ -179,6 +181,48 @@ async function getRecommendationsFromGoogleGemini(title, prompt) {
                 return [];
         }
     }
+}
+
+async function getCoverImageFromMusicBrainz(albumTitle, artist) {
+    // Helper function to perform a fetch request
+    async function fetchData(url) {
+        const response = await fetch(url);
+     //   console.log(url);
+     //   console.log(response);
+        return response.json();
+    }
+
+    async function fetchCover(url) {
+        const response = await fetch(url);
+        console.log(url);
+        console.log(response);
+        return response.json();
+    }
+
+
+    // Step 1: Query MusicBrainz for the MBID
+    const mbQueryUrl = `https://musicbrainz.org/ws/2/release-group/?query=${encodeURIComponent(albumTitle)} AND artist:"${encodeURIComponent(artist)}"&fmt=json`;
+    const mbData = await fetchData(mbQueryUrl);
+
+    const releases = mbData['release-groups'][0]?.releases;
+    if (!releases || releases.length === 0) {
+        throw new Error('No releases found for this album and artist.');
+    }
+    const mbid = releases[0].id;
+    //console.log(mbQueryUrl);
+    //console.log(mbData);
+    //console.log('MBID: '+mbid);
+
+    // Step 2: Get the cover art URLs using the MBID
+    const coverArtUrl = `http://coverartarchive.org/release/${mbid}`;
+    console.log(coverArtUrl);
+
+    const coverArtData = await fetchCover(coverArtUrl);
+    console.log(coverArtData);
+    console.log('large URL: '+coverArtData.images[0].thumbnails.large);
+
+    // Step 3: Return the URL for the large-sized cover art
+    return coverArtData.images[0].thumbnails.large;
 }
 
 async function getCoverImageFromiTunes(albumTitle) {
