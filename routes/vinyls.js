@@ -54,6 +54,9 @@ async function getSimilarVinyls(title, curator, prompt) {
     const coverImage = await getCoverImageFromiTunes(record.Title+' by '+record.Artist);
     //coverImage = getCoverImageFromMusicBrainz(record.Title, record.Artist);
 
+    //const coverImage = getCoverImageFromSpotify(record.Title, record.Artist);
+
+
         console.log(coverImage);
         return new Vinyl({
             title: record.Title,
@@ -255,6 +258,46 @@ async function getCoverImageFromiTunes(albumTitle) {
                 return 'img/default-cover.png'; // Fallback image URL in case of error
         }
     }
+}
+
+async function getCoverImageFromSpotify(title, artist) {
+
+    const accessToken = await getSpotifyAccessToken(process.env.SPOTIFY_CLIENT_ID, process.env.SPOTIFY_CLIENT_SECRET);
+    console.log('spotify accessToken:' + accessToken);
+
+    const query = `album:${title} artist:${artist}`;
+    const searchUrl = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=album`;
+    console.log('spotify search URL: '+ searchUrl);
+
+    const searchResponse = await fetch(searchUrl, {
+        headers: { 'Authorization': `Bearer ${accessToken}` }
+    });
+    console.log('Spotify search response: ' + searchResponse);
+
+    const searchData = await searchResponse.json();
+    const albumId = searchData.albums.items[0].id;
+
+    const albumDetailsResponse = await fetch(`https://api.spotify.com/v1/albums/${albumId}`, {
+        headers: { 'Authorization': `Bearer ${accessToken}` }
+    });
+    const albumDetails = await albumDetailsResponse.json();
+
+    return albumDetails.images.find(image => image.height === 640).url;
+}
+
+async function getSpotifyAccessToken(clientId, clientSecret) {
+    console.log('getSpotifyAccessToken for: '+clientId + ' : '+clientSecret);
+    
+    const response = await fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
+        },
+        body: 'grant_type=client_credentials'
+    });
+    const data = await response.json();
+    return data.access_token;
 }
 
 async function logQuery(curator, prompt, title, result){
